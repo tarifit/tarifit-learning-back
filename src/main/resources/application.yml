@@ -1,0 +1,53 @@
+server:
+  port: 8084
+
+# CORS Configuration
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:3001,http://localhost:3002}
+  allowed-methods: ${CORS_ALLOWED_METHODS:GET,POST,PUT,DELETE,OPTIONS}
+  allowed-headers: ${CORS_ALLOWED_HEADERS:*}
+  allow-credentials: ${CORS_ALLOW_CREDENTIALS:true}
+
+spring:
+  application:
+    name: tarifit-learning-content-service
+  data:
+    mongodb:
+      uri: mongodb://admin:password@localhost:27017/tarifit_learning?authSource=admin
+      auto-index-creation: true
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
+      client:
+        config:
+          default:
+            connectTimeout: 5000
+            readTimeout: 5000
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+services:
+  user:
+    url: http://localhost:8083
+  content:
+    url: http://localhost:8082
+
+logging:
+  level:
+    com.tarifit.learning.content: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    feign: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+feign:
+  hystrix:
+    enabled: true
