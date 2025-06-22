@@ -13,7 +13,7 @@ spring:
     name: tarifit-learning-content-service
   data:
     mongodb:
-      uri: ${MONGODB_URI:mongodb://admin:password@localhost:27017/tarifit_learning?authSource=admin}
+      uri: ${MONGODB_URI:mongodb://localhost:27017/tarifit_learning}
       auto-index-creation: true
   cloud:
     openfeign:
