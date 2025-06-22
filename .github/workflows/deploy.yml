@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
+  REGISTRY: ${{ secrets.AZURE_CONTAINER_REGISTRY_URL }}
   IMAGE_NAME: tarifit-learning-back
 
 jobs:
@@ -40,9 +40,9 @@ jobs:
     - name: Login to Azure Container Registry
       uses: azure/docker-login@v1
       with:
-        login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY }}
-        username: ${{ secrets.AZURE_ACR_USERNAME }}
-        password: ${{ secrets.AZURE_ACR_PASSWORD }}
+        login-server: ${{ secrets.AZURE_CONTAINER_REGISTRY_URL }}
+        username: ${{ secrets.AZURE_CONTAINER_REGISTRY_USERNAME }}
+        password: ${{ secrets.AZURE_CONTAINER_REGISTRY_PASSWORD }}
 
     - name: Build Docker image
       run: |
@@ -63,6 +63,6 @@ jobs:
         imageToDeploy: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
         environmentVariables: |
           PORT=8080
-          MONGODB_URI=${{ secrets.MONGODB_URI }}
+          MONGODB_URI=${{ secrets.SPRING_DATA_MONGODB_URI }}
           USER_SERVICE_URL=${{ secrets.USER_SERVICE_URL }}
           CONTENT_SERVICE_URL=${{ secrets.CONTENT_SERVICE_URL }}
