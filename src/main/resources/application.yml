@@ -1,5 +1,5 @@
 server:
-  port: 8084
+  port: ${PORT:8080}
 
 # CORS Configuration
 cors:
@@ -13,7 +13,7 @@ spring:
     name: tarifit-learning-content-service
   data:
     mongodb:
-      uri: mongodb://admin:password@localhost:27017/tarifit_learning?authSource=admin
+      uri: ${MONGODB_URI:mongodb://admin:password@localhost:27017/tarifit_learning?authSource=admin}
       auto-index-creation: true
   cloud:
     openfeign:
@@ -36,9 +36,9 @@ management:
 
 services:
   user:
-    url: http://localhost:8083
+    url: ${USER_SERVICE_URL:http://localhost:8080}
   content:
-    url: http://localhost:8082
+    url: ${CONTENT_SERVICE_URL:http://localhost:8082}
 
 logging:
   level:
